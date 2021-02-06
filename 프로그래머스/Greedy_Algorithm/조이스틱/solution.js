@@ -3,8 +3,10 @@
 //  - 아스키 코드값의 따라서 정해진 규칙을 적용
 // 2. "A"를 만났을때 왼쪽으로 가는게 빠른지, 오른쪽으로 가는게 빠른지 구하기
 //  - 되돌아가야하는 거리가 앞으로 연속되는 "A"의 길이보다 짧으면 뒤로가는게 효율적이다.
+//  - 되돌아가야하는 거리는 "A" 가 나오기 바로 전 index 번호와 같다.
+//  -  ex) "BBAAAB" -> A 개수 3, A 직전 index: 2 -> 2번 뒤로 가기
 function solution(name) {
-  const arr = [0];
+  const arr = [0]; // "A"를 만날때마다 왼쪽으로 돌아가면 줄일 수 있는 이동횟수 값
   const answer = [...name].reduce((answer, s, i) => {
     // 문자열의 문자가 "A" 면서, 그 전 문자가 "A" 가 아닌 경우
     // 즉, 처음으로 등장한 "A" 라면
@@ -15,7 +17,7 @@ function solution(name) {
     }
     return answer + ascii(name, i) + 1;
   }, 0);
-  return answer - Math.max(...arr) - 1;
+  return answer - Math.max(...arr) - 1; // 최대로 줄일 수 있는 이동횟수를 빼고, index 0일때도 이동거리가 정해졌으므로 빼기
 }
 function aCount(name) {
   // "A" 개수 새기
